@@ -2,18 +2,27 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 
-function App() {
+function App(props) {
+  const dinamicDate = new Date();
+  const dinamicDateString = dinamicDate.toLocaleDateString();
+  const dinamicTimeString = dinamicDate.toLocaleTimeString();
+  const textDinamic = 'Página em construção, conteúdo dinâmico: '+dinamicDateString+' - '+dinamicTimeString;
+
   return (    
     <div>
       <Head>
         <title>PsicoNET</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>      
       <section>
         <h1>PSICÓLOGOS na Internet</h1>
         <Menu />
-        <h2>Página em construção...</h2>
+        <h2>{props.homeTitulo}</h2>
+        <p></p>
+        <p>{props.homeArtigo}</p>
+        <p></p>
+        <p>{textDinamic}</p>
       </section>
     </div>
   );
@@ -40,7 +49,6 @@ function Menu() {
     }
 
     if (activeItem) {
-      console.log('Atualiza menu', count);
       let itensMenu = document.getElementsByName('menuItem');
       let qtdItens = itensMenu.length;
       for (let i=0; i < qtdItens; i++){
@@ -61,11 +69,27 @@ function Menu() {
       <a href="#faleConosco" name="menuItem" id="faleConosco" onClick={mudaActive}>Fale conosco</a>
       <Link href="/sobre" id="sobre"><a name="menuItem" onClick={mudaActive}>Sobre</a></Link>
       <a href="#teste" className="icon" onClick={addCount}>
-        <i className="fa fa-bars"></i>
+        <i className="material-icons">menu</i>
       </a>
     </div>
   )
 }
 
+export function getStaticProps() {
+  const homeTitulo = 'Psicologia ao alcance de todos'
+  const staticDate = new Date();
+  const staticDateString = staticDate.toLocaleDateString();
+  const staticTimeString = staticDate.toLocaleTimeString();
+  const homeArtigo = 'Página em construção, conteúdo estático: '+staticDateString+' - '+staticTimeString;
+
+  return {
+    props: {
+      homeTitulo,
+      homeArtigo
+    },
+    revalidate: 5
+  }
+
+}
 
 export default App;

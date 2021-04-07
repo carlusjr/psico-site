@@ -2,8 +2,12 @@
 
 Projeto de site pessoal de psicólogo para atendimento online.
 
-O propósito deste projeto é criar um site pessoal, bem personalizado de um Psicólogo(a) que faz atendimento online pela internet, que utliza diversos meios de contato com seus pacientes: e-mail, whatsapp, aplicativos como Skype, zoom, entre outros meios.
+O propósito deste projeto é usar a construção de um sie pessoal de atendimento psicológico remoto para aprender a utilizar os recursos do next.js.
+O site contará com acesso a dados consumindo APIs implementadas em node.js, que por sua vez, acessam banco de dados relacional MySQL hospedado na nuvem AWS.
+A implementação das APIs node.js também fazem parte do processo de aprendizagem em curso nesse projeto.
 
-No site, além das informações sobre o Psicologo(a) haverá também os procedimentos para o atendimento remoto, as regras estabelecidas pelo CFP para este tipo de atendimento, bem como meios de pagamento das sessões incluindo pix e cartão de crédito, recibo digital e meios de contato para dúvias, sugestões e reclamação.
+A branch produção representa o projeto em construção e a cada etapa vencida e testada, haverá um merge para branch master.
+Caso tenha curiosidade de ver os resultados em andamente, a vercel já disponibiliza um endereço web real para teste da aplicação e também um endereço para produção.
 
-O Conselho Federal de Psicologia já aprovou e normatizou esta modalidade de atendimento no Brasil, que vem se tornando cada vez mais comum.
+Como o intuito deste projeto é a aprendizagem, não é recomendado qualquer contribuição para o mesmo.
+Agradeço a compreensão.

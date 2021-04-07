@@ -1,13 +1,9 @@
 import Head from 'next/head'
 import Menu from '../src/menu.js'
-
+import Image from 'next/image'
 
 function App(props) {
-  const dinamicDate = new Date();
-  const dinamicDateString = dinamicDate.toLocaleDateString();
-  const dinamicTimeString = dinamicDate.toLocaleTimeString();
-  const textDinamic = 'Página em construção, conteúdo dinâmico: '+dinamicDateString+' - '+dinamicTimeString;
-
+  // aqui podem ser colocados dados dinâmicos
   return (    
     <div>
       <Head>
@@ -17,13 +13,14 @@ function App(props) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"  />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />        
       </Head>      
-      <section>
+      <section>        
         <Menu />
-        <h2>{props.homeTitulo}</h2>
         <p></p>
-        <p>{props.homeArtigo}</p>
+        <Image src="/Freud.jpg" alt="Freud online" width={300} height={300} />
+        <h2>{props.artigoTitulo}</h2>
         <p></p>
-        <p>{textDinamic}</p>
+        <p>{props.artigoTexto}</p>
+        <p></p>       
       </section>
     </div>
   );
@@ -31,20 +28,18 @@ function App(props) {
 
 
 export async function getStaticProps() {
-  const homeTitulo = 'Psicologia ao alcance de todos'
-  const staticDate = new Date();
-  const staticDateString = staticDate.toLocaleDateString();
-  const staticTimeString = staticDate.toLocaleTimeString();
-  const homeArtigo = 'Página em construção, conteúdo estático: '+staticDateString+' - '+staticTimeString;
 
+  const db = require("../src/db");
+  let resultado = await db.selectArtigos('Home');
+  const artigoJSON   = JSON.parse(resultado);
+  const artigoTitulo = artigoJSON.art_titulo;
+  const artigoTexto  = artigoJSON.art_texto; 
   return {
     props: {
-      homeTitulo,
-      homeArtigo
+      artigoTitulo, artigoTexto
     },
     revalidate: 5
   }
-
 }
 
 export default App;

@@ -1,13 +1,10 @@
 import Head from 'next/head'
-import Menu from '../src/menu.js'
+import Menu from '../src/menu'
+import Image from 'next/image'
 
-
-function App(props) {
-  const dinamicDate = new Date();
-  const dinamicDateString = dinamicDate.toLocaleDateString();
-  const dinamicTimeString = dinamicDate.toLocaleTimeString();
-  const textDinamic = 'Página em construção, conteúdo dinâmico: '+dinamicDateString+' - '+dinamicTimeString;
-
+function App({data}) {
+  // aqui podem ser colocados dados dinâmicos
+  const arrayTexto = data.art_texto.split('\n');
   return (    
     <div>
       <Head>
@@ -17,34 +14,34 @@ function App(props) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"  />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />        
       </Head>      
-      <section>
+      <section>        
         <Menu />
-        <h2>{props.homeTitulo}</h2>
         <p></p>
-        <p>{props.homeArtigo}</p>
+        <Image src="/Freud.jpg" alt="Freud online" width={300} height={250} />
         <p></p>
-        <p>{textDinamic}</p>
+        <div id="conteudo">
+          <h2 id="titulo">{data.art_titulo}</h2>
+          <p></p>
+          <h3 id="subtitulo">{data.art_subtitulo}</h3>
+          <p></p>
+          <div className="textoArtigo">{arrayTexto.map( txt => <p>{txt}</p> )}</div>
+          <p></p>       
+        </div>
       </section>
     </div>
   );
 }
 
-
-export async function getStaticProps() {
-  const homeTitulo = 'Psicologia ao alcance de todos'
-  const staticDate = new Date();
-  const staticDateString = staticDate.toLocaleDateString();
-  const staticTimeString = staticDate.toLocaleTimeString();
-  const homeArtigo = 'Página em construção, conteúdo estático: '+staticDateString+' - '+staticTimeString;
-
+export async function getStaticProps() { 
+  const db =  require("../src/db");
+  const res = await db.getArtigo("home");
+  const resJSON = JSON.parse(res);
   return {
     props: {
-      homeTitulo,
-      homeArtigo
+      data: resJSON,
     },
-    revalidate: 5
+    revalidate: 10
   }
-
 }
 
 export default App;

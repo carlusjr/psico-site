@@ -1,0 +1,31 @@
+// Acesso ao Bando de Dados MySQL AWS
+const mysql = require("mysql2/promise");
+
+async function connect() {
+    if (global.connection && global.connection !== 'disconnected') {
+        return global.connection;
+    }
+    try {
+        const conn = await mysql.createConnection({
+            host: process.env.MYSQL_URL,
+            user: process.env.MYSQL_USERNAME,
+            password: process.env.MYSQL_PASSWORD,
+            database: process.env.MYSQL_DATABAS
+        });
+        global.connection = conn;
+        return conn;
+    } catch (error) {
+        console.log('Não foi possível conectar ao DB!');
+        console.log(error.code, error.errno);
+        process.exit();
+    }
+}
+
+async function getArtigo(nomeArtigo) {
+    const conn = await connect();
+    const [res] = await conn.query('SELECT * FROM Artigos WHERE art_nome = ?', nomeArtigo);
+    const resJSON = JSON.stringify(res[0]);    
+    return resJSON;
+}
+
+module.exports = {getArtigo};

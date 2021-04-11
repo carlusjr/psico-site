@@ -6,12 +6,7 @@ async function connect() {
         return global.connection;
     }
     try {
-        const conn = await mysql.createConnection({
-            host: process.env.MYSQL_URL,
-            user: process.env.MYSQL_USERNAME,
-            password: process.env.MYSQL_PASSWORD,
-            database: process.env.MYSQL_DATABAS
-        });
+        const conn = await mysql.createConnection(process.env.MYSQL_CONNSTRING);
         global.connection = conn;
         return conn;
     } catch (error) {

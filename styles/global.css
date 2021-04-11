@@ -4,6 +4,8 @@ body {
   padding: 20px;
   background-color: #f4f6f7;
   font-family: 'Open Sans', sans-serif;    
+  max-width: 1080px;
+  display: block;
 }
 
 h1 {
@@ -13,6 +15,14 @@ h1 {
   font-size: 200%;
   font-weight: bold;
 }
+
+h3 {
+  color: #0088cc ;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
 
 section {
   background-color: white;
@@ -50,6 +60,7 @@ section {
 .topnav .icon {
   display: none;
 }
+
 
 @media screen and (max-width: 600px) {
   .topnav a:not(:first-child) {

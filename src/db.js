@@ -12,7 +12,6 @@ async function connect() {
             password: process.env.MYSQL_PASSWORD,
             database: process.env.MYSQL_DATABAS
         });
-        console.log("Conectado ao MySQL AWS.")
         global.connection = conn;
         return conn;
     } catch (error) {
@@ -22,11 +21,11 @@ async function connect() {
     }
 }
 
-async function selectArtigos(nomeArtigo) {
+async function getArtigo(nomeArtigo) {
     const conn = await connect();
-    const [resultado] = await conn.query('SELECT * FROM Artigos WHERE art_nome = ?', nomeArtigo);
-    const resultJson = JSON.stringify(resultado[0]);
-    return resultJson;
+    const [res] = await conn.query('SELECT * FROM Artigos WHERE art_nome = ?', nomeArtigo);
+    const resJSON = JSON.stringify(res[0]);    
+    return resJSON;
 }
 
-module.exports = { selectArtigos };
+module.exports = {getArtigo};

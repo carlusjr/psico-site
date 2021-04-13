@@ -24,7 +24,7 @@ function App({data}) {
           <p></p>
           <h3 id="subtitulo">{data.art_subtitulo}</h3>
           <p></p>
-          <div className="textoArtigo">{arrayTexto.map( txt => <p>{txt}</p> )}</div>
+          <div className="textoArtigo">{arrayTexto.map( (txt, index) => <p key={index}>{txt}</p> )}</div>
           <p></p>       
         </div>
       </section>

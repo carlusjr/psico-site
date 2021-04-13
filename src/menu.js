@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-
 
 function Menu() {
   const [count, setCount] = useState(0);
@@ -44,7 +42,6 @@ function Menu() {
         <a href="#procedimentos" name="menuItem" id="procedimentos" onClick={mudaActive}>Procedimentos</a>
         <a href="#linksUteis" name="menuItem" id="linksUteis" onClick={mudaActive}>Links Úteis</a>
         <a href="#faleConosco" name="menuItem" id="faleConosco" onClick={mudaActive}>Fale conosco</a>
-        <Link href="/sobre" id="sobre"><a name="menuItem" onClick={mudaActive}>Sobre</a></Link>
         <a href="#teste" className="icon" onClick={addCount}>
           <i className="material-icons">menu</i>
         </a>

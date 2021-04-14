@@ -64,8 +64,7 @@ export default function Pagina({ site, menu, artigo, pagina }) {
 export async function getStaticPaths() {
   // montar paths com consulta ao banco de dados
   return {
-    paths: [{ params: { pagina: ' ' } },
-    { params: { pagina: 'home' } },
+    paths: [{ params: { pagina: 'home' } },
     { params: { pagina: 'procedimentos' } }
     ],
     fallback: false

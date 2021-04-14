@@ -1,26 +1,16 @@
 {
-  "name": "psico-site",
-  "version": "1.0.0",
-  "description": "Projeto de site pessoal de psicólogo para atendimento online.",
-  "main": "index.js",
+  "name": "psicosite",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/carlusjr/psico-site.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/carlusjr/psico-site/issues"
-  },
-  "homepage": "https://github.com/carlusjr/psico-site#readme",
   "dependencies": {
     "mysql2": "^2.2.5",
-    "next": "^10.0.9",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "next": "10.1.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   }
 }

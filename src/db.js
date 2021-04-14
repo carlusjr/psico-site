@@ -23,4 +23,18 @@ async function getArtigo(nomeArtigo) {
     return resJSON;
 }
 
-module.exports = {getArtigo};
+async function getSite(nomeSite) {
+  const conn = await connect();
+  const [res] = await conn.query('SELECT * FROM site WHERE site_nome = ?', nomeSite);
+  const resJSON = JSON.stringify(res[0]);    
+  return resJSON;
+}
+
+async function getMenu(idSite) {
+  const conn = await connect();
+  const [res] = await conn.query('SELECT * FROM menu WHERE site_id = ?', idSite);
+  const resJSON = JSON.stringify(res);    
+  return resJSON;
+}
+
+module.exports = {getArtigo, getSite, getMenu};

@@ -1,11 +1,12 @@
+html,
 body {
-  margin-top: 0px;
+  /* margin-top: 0px;
   border-top: 3px solid #0088cc;
   padding: 20px;
+  display: block; */
   background-color: #f4f6f7;
   font-family: 'Open Sans', sans-serif;    
   max-width: 1080px;
-  display: block;
 }
 
 h1 {
@@ -61,11 +62,27 @@ section {
   display: none;
 }
 
+.footer {
+  width: 100%;
+  height: 100px;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer img {
+  margin-left: 0.5rem;
+}
+
+.footer a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media screen and (max-width: 600px) {
-  .topnav a:not(:first-child) {
-    display: none;
-  }
+  .topnav a:not(:first-child) {display: none;}
   .topnav a.icon {
     float: right;
     display: block;
@@ -73,10 +90,8 @@ section {
 }
 
 @media screen and (max-width: 600px) {
-  .topnav.responsive {
-    position: relative;
-  }
-  .topnav.responsive a.icon {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
     position: absolute;
     right: 0;
     top: 0;

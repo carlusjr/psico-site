@@ -5,7 +5,7 @@ import { globalMenuInicio } from '../src/config'
 
 export default function Psicosite() {
 
-  // Primeiro item ativo no menu
+  // index redireciona para /paginas/home
   const rota = '/paginas/'+globalMenuInicio;
   
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function Psicosite() {
       <Head>
         <title>Psicosite</title>
       </Head>
-      <h1>Carregando...</h1>
+      <h2>Carregando...</h2>
     </div>
   )
 }

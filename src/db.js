@@ -18,21 +18,21 @@ async function connect() {
 
 async function getArtigo(nomeArtigo) {
     const conn = await connect();
-    const [res] = await conn.query('SELECT * FROM artigos WHERE art_nome = ?', nomeArtigo);
+    const [res] = await conn.query('SELECT art_titulo, art_subtitulo, art_texto FROM artigos WHERE art_nome = ?', nomeArtigo);
     const resJSON = JSON.stringify(res[0]);    
     return resJSON;
 }
 
 async function getSite(nomeSite) {
   const conn = await connect();
-  const [res] = await conn.query('SELECT * FROM site WHERE site_nome = ?', nomeSite);
+  const [res] = await conn.query('SELECT site_nome, site_titulo FROM site WHERE site_nome = ?', nomeSite);
   const resJSON = JSON.stringify(res[0]);    
   return resJSON;
 }
 
 async function getMenu(idSite) {
   const conn = await connect();
-  const [res] = await conn.query('SELECT * FROM menu WHERE site_id = ?', idSite);
+  const [res] = await conn.query('SELECT menu_nome, menu_titulo FROM menu WHERE site_id = ?', idSite);
   const resJSON = JSON.stringify(res);    
   return resJSON;
 }

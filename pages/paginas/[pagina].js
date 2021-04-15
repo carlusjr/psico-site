@@ -1,25 +1,13 @@
-import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
 import { globalIdSite, globalNomeSite } from '../../src/config'
+import Header from '../../src/header'
+import Menu from '../../src/menu'
+import Conteudo from '../../src/conteudo'
 
 export default function Pagina({ site, menu, artigo, pagina }) {
 
-  const [sendRequest, setSendRequest] = useState(false);
-  const arrayTexto = artigo.art_texto.split('\n');
-  const imagemFile = '/'+pagina+'.jpg'
-
-  useEffect(() => {
-    if(sendRequest){
-      let x = document.getElementById("menuTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-      setSendRequest(false);
-    }
-  });
+  //const arrayTexto = artigo.art_texto.split('\n');
+  //const imagemFile = '/' + pagina + '.jpg'
 
   return (
     <div>
@@ -30,35 +18,22 @@ export default function Pagina({ site, menu, artigo, pagina }) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
-
       <section>
-        <h1>{site.site_titulo}</h1>
-        <div className="topnav" id="menuTopnav">
-          {menu.map((item, index) => <a 
-            href={`/paginas/${item.menu_nome}`} 
-            className={(item.menu_nome == pagina ? "active" : "")} 
-            id={item.menu_nome} 
-            key={index}>{item.menu_titulo}</a>)
-          };
-          <a href="#teste" 
-            className="icon" 
-            onClick={() => setSendRequest(true)}> 
-            <i className="material-icons">menu</i>
-          </a>
-        </div>
-        <div id="conteudo">
+        <Header titulo={site.site_titulo} />
+        <Menu menuItens={menu} paginaAtiva={pagina} />
+        <Conteudo artigo={artigo} paginaAtiva={pagina} />
+
+        {/* <div id="conteudo">
           <p></p>
           <img src={imagemFile} alt={pagina} />
           <h2 id="titulo">{artigo.art_titulo}</h2>
-          <hr/>
           <p></p>
           <h3 id="subtitulo">{artigo.art_subtitulo}</h3>
+          <hr />
           <p></p>
           <div className="textoArtigo">{arrayTexto.map((txt, index) => <p key={index}>{txt}</p>)}</div>
-          <p></p>
-        </div>
+        </div> */}
       </section>
-
       <footer className="footer">
         <p>Desenvolvido por&nbsp;<a href="mailto:crsilvajr@gmail.com">Carlos Roberto da Silva Jr.</a></p>
         <p><a href="#" className="back-top">Voltar ao Topo</a></p>
@@ -69,12 +44,12 @@ export default function Pagina({ site, menu, artigo, pagina }) {
 
 export async function getStaticPaths() {
   // montar paths com consulta ao banco de dados
+  const db = require("../../src/db");
+  const rMenu = await db.getMenu(globalIdSite);
+  const rMenuJSON = JSON.parse(rMenu);
+  const paths = rMenuJSON.map( menu => { return { params: { pagina: menu.menu_nome } } });
   return {
-    paths: [{ params: { pagina: 'home' } },
-    { params: { pagina: 'procedimentos' } },
-    { params: { pagina: 'psicologos' } },
-    { params: { pagina: 'sobre' } },
-    ],
+    paths,
     fallback: false
   }
 }
@@ -99,6 +74,6 @@ export async function getStaticProps(context) {
       artigo: rArtigoJSON,
       pagina: pagina,
     },
-    revalidate: 60
+    revalidate: 120
   }
 }

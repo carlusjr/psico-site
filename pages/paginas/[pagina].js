@@ -1,11 +1,13 @@
-import Head from 'next/head'
 import React, { useState, useEffect } from 'react'
+import Head from 'next/head'
+import Image from 'next/image'
 import { globalIdSite, globalNomeSite } from '../../src/config'
 
 export default function Pagina({ site, menu, artigo, pagina }) {
 
   const [sendRequest, setSendRequest] = useState(false);
   const arrayTexto = artigo.art_texto.split('\n');
+  const imagemFile = '/'+pagina+'.jpg'
 
   useEffect(() => {
     if(sendRequest){
@@ -22,7 +24,7 @@ export default function Pagina({ site, menu, artigo, pagina }) {
   return (
     <div>
       <Head>
-        <title>PsicoNET</title>
+        <title>Psicosite</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" />
@@ -45,7 +47,10 @@ export default function Pagina({ site, menu, artigo, pagina }) {
           </a>
         </div>
         <div id="conteudo">
+          <p></p>
+          <img src={imagemFile} alt={pagina} />
           <h2 id="titulo">{artigo.art_titulo}</h2>
+          <hr/>
           <p></p>
           <h3 id="subtitulo">{artigo.art_subtitulo}</h3>
           <p></p>
@@ -55,7 +60,8 @@ export default function Pagina({ site, menu, artigo, pagina }) {
       </section>
 
       <footer className="footer">
-        Desenvolvido por Carlos Roberto da Silva Junior
+        <p>Desenvolvido por&nbsp;<a href="mailto:crsilvajr@gmail.com">Carlos Roberto da Silva Jr.</a></p>
+        <p><a href="#" className="back-top">Voltar ao Topo</a></p>
       </footer>
     </div>
   )
@@ -65,7 +71,9 @@ export async function getStaticPaths() {
   // montar paths com consulta ao banco de dados
   return {
     paths: [{ params: { pagina: 'home' } },
-    { params: { pagina: 'procedimentos' } }
+    { params: { pagina: 'procedimentos' } },
+    { params: { pagina: 'psicologos' } },
+    { params: { pagina: 'sobre' } },
     ],
     fallback: false
   }

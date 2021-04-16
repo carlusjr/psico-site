@@ -1,3 +1,1 @@
-export const globalIdSite = 1;
-export const globalNomeSite = "psicosite";
-export const globalMenuInicio = "home";
+export const globalSite = process.env.GLOBAL_SITE;

@@ -1,12 +1,11 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { globalMenuInicio } from '../src/config'
 
 export default function Psicosite() {
 
   // index redireciona para /paginas/home
-  const rota = '/paginas/'+globalMenuInicio;
+  const rota = '/paginas/home';
   
   useEffect(() => {
     router.push(rota)

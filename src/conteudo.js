@@ -25,7 +25,11 @@ export default function Conteudo(props) {
         return (<p key={myKey}>{leftLink}<Link href={linkEmail}><a>{userLink}</a></Link>{rigthLink}</p>)
       } else {
         const arrayTxt = userLink.split('=');
-        return (<p key={myKey}>{leftLink}<Link href={arrayTxt[1]}><a>{arrayTxt[0]}</a></Link>{rigthLink}</p>)
+        if (props.paginaAtiva == 'linksuteis'){          
+          return (<li key={myKey}>{leftLink}<Link href={arrayTxt[1]}><a>{arrayTxt[0]}</a></Link>{rigthLink}</li>)
+        } else {
+          return (<p key={myKey}>{leftLink}<Link href={arrayTxt[1]}><a>{arrayTxt[0]}</a></Link>{rigthLink}</p>)
+        }
       }
     } else {
       return (<p key={myKey}>{texto}</p>)

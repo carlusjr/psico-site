@@ -1,14 +1,11 @@
 import Head from 'next/head'
-import { globalIdSite, globalNomeSite } from '../../src/config'
+import { globalSite } from '../../src/config'
 import Header from '../../src/header'
 import Menu from '../../src/menu'
 import Conteudo from '../../src/conteudo'
+import Rodape from '../../src/rodape'
 
 export default function Pagina({ site, menu, artigo, pagina }) {
-
-  //const arrayTexto = artigo.art_texto.split('\n');
-  //const imagemFile = '/' + pagina + '.jpg'
-
   return (
     <div>
       <Head>
@@ -22,22 +19,12 @@ export default function Pagina({ site, menu, artigo, pagina }) {
         <Header titulo={site.site_titulo} />
         <Menu menuItens={menu} paginaAtiva={pagina} />
         <Conteudo artigo={artigo} paginaAtiva={pagina} />
-
-        {/* <div id="conteudo">
-          <p></p>
-          <img src={imagemFile} alt={pagina} />
-          <h2 id="titulo">{artigo.art_titulo}</h2>
-          <p></p>
-          <h3 id="subtitulo">{artigo.art_subtitulo}</h3>
-          <hr />
-          <p></p>
-          <div className="textoArtigo">{arrayTexto.map((txt, index) => <p key={index}>{txt}</p>)}</div>
-        </div> */}
       </section>
-      <footer className="footer">
-        <p>Desenvolvido por&nbsp;<a href="mailto:crsilvajr@gmail.com">Carlos Roberto da Silva Jr.</a></p>
+      <Rodape />
+      {/* <footer className="footer">
+        <p>Desenvolvido por&nbsp;<a>Carlos Roberto da Silva Jr.</a></p>
         <p><a href="#" className="back-top">Voltar ao Topo</a></p>
-      </footer>
+      </footer> */}
     </div>
   )
 }
@@ -45,7 +32,9 @@ export default function Pagina({ site, menu, artigo, pagina }) {
 export async function getStaticPaths() {
   // montar paths com consulta ao banco de dados
   const db = require("../../src/db");
-  const rMenu = await db.getMenu(globalIdSite);
+  const arrayGlobal = globalSite.split('/');
+  const idSite = arrayGlobal[0];
+  const rMenu = await db.getMenu(idSite);
   const rMenuJSON = JSON.parse(rMenu);
   const paths = rMenuJSON.map( menu => { return { params: { pagina: menu.menu_nome } } });
   return {
@@ -60,8 +49,11 @@ export async function getStaticProps(context) {
     pagina = 'home';
   }
   const db = require("../../src/db");
-  const rSite = await db.getSite(globalNomeSite);
-  const rMenu = await db.getMenu(globalIdSite);
+  const arrayGlobal = globalSite.split('/');
+  const idSite = arrayGlobal[0];
+  const nomeSite = arrayGlobal[1];
+  const rSite = await db.getSite(nomeSite);
+  const rMenu = await db.getMenu(idSite);
   const rArtigo = await db.getArtigo(pagina);
   const rSiteJSON = JSON.parse(rSite);
   const rMenuJSON = JSON.parse(rMenu);

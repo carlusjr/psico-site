@@ -1,8 +1,10 @@
+import Link from 'next/link'
+
 export default function Rodape() {
   return (
-    <footer className="footer">
-      <p>Desenvolvido por&nbsp;<a href="mailto:crsilvajr@gmail.com">Carlos Roberto da Silva Jr.</a></p>
+    <div className="footer">
+      <p>Desenvolvido por&nbsp;<Link href="https://github.com/carlusjr/psico-site"><a>Carlos Roberto da Silva Jr.</a></Link></p>
       <p><a href="#" className="back-top">Voltar ao Topo</a></p>
-    </footer>
+    </div>
   )
 }

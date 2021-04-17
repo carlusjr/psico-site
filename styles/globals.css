@@ -7,6 +7,7 @@ container {
   background-color: #f4f6f7;
   font-family: "Open Sans", sans-serif;
   max-width: 1080px;
+  border-radius: 5px;
 }
 
 h1 {
@@ -34,8 +35,8 @@ section {
 }
 
 li {
-  font-size: 18px;
-  margin-top: 15px;
+  font-size: 16px;
+  margin-top: 10px;
 }
 
 .psicologos {
@@ -43,14 +44,52 @@ li {
 }
 
 .textoArtigo {
-  font-size: 16px;
+  font-size: 14px;
 }
 
-.imageFile {
+.bigImage {
   top: 10px;
   width: 400px;
   height: 200px;  
   position: relative;
+}
+
+.smallImage {
+  top: 10px;
+  width: 300px;
+  height: 150px;  
+  position: relative;
+}
+
+.pgtoImage {
+  top: 5px;
+  width: 300px;
+  height: 300px;  
+  position: relative;
+}
+
+input[type=text], input[type=file], select, textarea {
+  width: 100%; 
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px; 
+  box-sizing: border-box;
+  margin-top: 6px; 
+  margin-bottom: 16px;
+  resize: vertical;
+}
+ 
+input[type=submit] {
+  background-color: #2f6088;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+ 
+input[type=submit]:hover {
+  background-color: #19466b;
 }
 
 .topnav {
@@ -96,11 +135,11 @@ li {
 }
 
 @media screen and (max-width: 600px) {
-  .topnav a:not(:first-child) {
+  .topnav a {
     display: none;
   }
   .topnav a.icon {
-    float: right;
+    float: left;
     display: block;
   }
 }

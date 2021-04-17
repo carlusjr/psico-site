@@ -38,7 +38,7 @@ export default function Conteudo(props) {
   // Exibe conteúdo do artigo
   return (
     <div id="conteudo" className="textoArtigo">
-      <ImagemTop paginaAtiva={props.paginaAtiva} />
+      <ImagemTop artigo={props.artigo} paginaAtiva={props.paginaAtiva} />
       <h2 id="titulo">{props.artigo.art_titulo}</h2>
       <p></p>
       <h3 id="subtitulo">{props.artigo.art_subtitulo}</h3>

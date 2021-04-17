@@ -11,7 +11,7 @@ export default function Pagamento(props) {
             </a>
         </p>
         <p>Se preferir, pague via PIX usando como chave o celular (41) 99880-1809 ou com QR CODE abaixo:</p>
-        <div className="imageFile">
+        <div className="pgtoImage">
           <Image src="/QrCodePIX.jpg" objectPosition="left" layout="fill" objectFit="scale-down" alt="QR CODE PIX" />        
         </div>
       </div>

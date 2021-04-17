@@ -18,7 +18,7 @@ async function connect() {
 
 async function getArtigo(nomeArtigo) {
     const conn = await connect();
-    const [res] = await conn.query('SELECT art_titulo, art_subtitulo, art_texto FROM artigos WHERE art_nome = ?', nomeArtigo);
+    const [res] = await conn.query('SELECT art_titulo, art_subtitulo, art_texto, art_imagem, art_classImagem  FROM artigos WHERE art_nome = ?', nomeArtigo);
     const resJSON = JSON.stringify(res[0]);    
     return resJSON;
 }

@@ -5,6 +5,7 @@ import Menu from '../../src/menu'
 import Conteudo from '../../src/conteudo'
 import Rodape from '../../src/rodape'
 import Pagamento from '../../src/pagamento'
+import Faleconosco from '../../src/faleconosco'
 
 export default function Pagina({ site, menu, artigo, pagina }) {
   return (
@@ -21,6 +22,7 @@ export default function Pagina({ site, menu, artigo, pagina }) {
         <Menu menuItens={menu} paginaAtiva={pagina} />
         <Conteudo artigo={artigo} paginaAtiva={pagina} />
         <Pagamento paginaAtiva={pagina} />
+        <Faleconosco paginaAtiva={pagina} />
       </section>
       <Rodape />
     </div>

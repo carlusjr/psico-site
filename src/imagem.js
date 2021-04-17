@@ -1,10 +1,13 @@
 import Image from 'next/image'
+
 export default function ImagemTop(props) {
-  const imagemFile = '/' + props.paginaAtiva + '.jpg'
-  if (props.paginaAtiva != 'pagamento') {
+  const pagina = props.paginaAtiva;
+  const imagemFile = props.artigo.art_imagem;
+  const classImagem = props.artigo.art_classImagem;
+  if (imagemFile) {
     return (
-      <div className="imageFile">
-        <Image src={imagemFile} objectPosition="left" layout="fill" objectFit="scale-down" alt={props.paginaAtiva} />     
+      <div className={classImagem}>
+        <Image src={imagemFile} objectPosition="left" layout="fill" objectFit="scale-down" alt={pagina} />     
       </div>
     )
   } else {

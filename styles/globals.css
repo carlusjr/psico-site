@@ -35,10 +35,22 @@ section {
 
 li {
   font-size: 18px;
+  margin-top: 15px;
+}
+
+.psicologos {
+  margin: 0;
 }
 
 .textoArtigo {
   font-size: 16px;
+}
+
+.imageFile {
+  top: 10px;
+  width: 400px;
+  height: 200px;  
+  position: relative;
 }
 
 .topnav {
@@ -69,14 +81,14 @@ li {
   display: none;
 }
 
-.footer {  
+.footer {
   height: 70px;
   padding: 10px;
   font-size: 12px;
   font-weight: bold;
   max-width: 1000px;
   display: block;
-  text-align: center;  
+  text-align: center;
 }
 
 .back-top {

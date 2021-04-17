@@ -4,6 +4,7 @@ import Header from '../../src/header'
 import Menu from '../../src/menu'
 import Conteudo from '../../src/conteudo'
 import Rodape from '../../src/rodape'
+import Pagamento from '../../src/pagamento'
 
 export default function Pagina({ site, menu, artigo, pagina }) {
   return (
@@ -19,12 +20,9 @@ export default function Pagina({ site, menu, artigo, pagina }) {
         <Header titulo={site.site_titulo} />
         <Menu menuItens={menu} paginaAtiva={pagina} />
         <Conteudo artigo={artigo} paginaAtiva={pagina} />
+        <Pagamento paginaAtiva={pagina} />
       </section>
       <Rodape />
-      {/* <footer className="footer">
-        <p>Desenvolvido por&nbsp;<a>Carlos Roberto da Silva Jr.</a></p>
-        <p><a href="#" className="back-top">Voltar ao Topo</a></p>
-      </footer> */}
     </div>
   )
 }

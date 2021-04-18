@@ -11,29 +11,27 @@ export default function Faleconosco(props) {
   });
 
   function handleInputChange(event) {
-    if (event.target.name === "anexo")
-      campos[event.target.name] = event.target.files[0];
-    else
-      campos[event.target.name] = event.target.value;
+    campos[event.target.name] = event.target.value;
     setCampos(campos);
   }
 
   function handleFormSubmit(event) {
     event.preventDefault();
-    console.log(campos);
+    enviarEmail(campos);
+    event.target.reset();
   }
 
   return (
     <div className="faleconosco">
       <form onSubmit={handleFormSubmit}>
         <label htmlFor="email">E-mail</label>
-        <input type="text" id="email" name="email" placeholder="Digite seu e-mail" onChange={handleInputChange} />
+        <input type="text" id="email" name="email" required placeholder="Digite seu e-mail" onChange={handleInputChange} />
 
         <label htmlFor="nome">Nome</label>
-        <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" onChange={handleInputChange} />
+        <input type="text" id="nome" name="nome" required placeholder="Digite seu nome" onChange={handleInputChange} />
 
         <label htmlFor="mensagem">Mensagem</label>
-        <textarea id="mensagem" name="mensagem" placeholder="Digite sua mensagem" className="textArea" onChange={handleInputChange}></textarea>
+        <textarea id="mensagem" name="mensagem" required placeholder="Digite sua mensagem" className="textArea" onChange={handleInputChange}></textarea>
 
         <input type="submit" value="Enviar" />
       </form>
@@ -41,3 +39,13 @@ export default function Faleconosco(props) {
   );
 }
 
+export async function enviarEmail(campos) {
+  const camposJSON = JSON.stringify(campos);
+  const res = await fetch('/api/contato', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: camposJSON
+  })
+  const resJSON = await res.json();
+  alert(resJSON.message)
+}

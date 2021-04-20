@@ -37,7 +37,7 @@ export default async function contato(req, res) {
           subject: `${req.body.nome}`,
           text: `${req.body.mensagem}`
         });
-        res.status(200).json({ message: "Mensagem enviada com sucesso!", info });
+        res.status(200).json({ message: "Mensagem enviada com sucesso!" });
   
       } catch (error) {
         res.status(400).json({ message: error.message })

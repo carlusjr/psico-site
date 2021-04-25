@@ -39,6 +39,10 @@ li {
   margin-top: 10px;
 }
 
+form {
+  max-width: 500;
+}
+
 .psicologos {
   margin: 0;
 }
@@ -50,36 +54,40 @@ li {
 .bigImage {
   top: 10px;
   width: 400px;
-  height: 200px;  
+  height: 200px;
   position: relative;
 }
 
 .smallImage {
   top: 10px;
   width: 300px;
-  height: 150px;  
+  height: 150px;
   position: relative;
 }
 
 .pgtoImage {
   top: 5px;
   width: 300px;
-  height: 300px;  
+  height: 300px;
   position: relative;
 }
 
-input[type=text], input[type=file], select, textarea {
-  width: 100%; 
+input[type="text"],
+input[type="file"],
+input[type="password"],
+select,
+textarea {
+  width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px; 
+  border-radius: 4px;
   box-sizing: border-box;
-  margin-top: 6px; 
+  margin-top: 6px;
   margin-bottom: 16px;
   resize: vertical;
 }
- 
-input[type=submit] {
+
+input[type="submit"] {
   background-color: #2f6088;
   color: white;
   padding: 12px 20px;
@@ -87,8 +95,8 @@ input[type=submit] {
   border-radius: 4px;
   cursor: pointer;
 }
- 
-input[type=submit]:hover {
+
+input[type="submit"]:hover {
   background-color: #19466b;
 }
 

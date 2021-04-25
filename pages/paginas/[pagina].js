@@ -11,7 +11,7 @@ export default function Pagina({ site, menu, artigo, pagina }) {
   return (
     <div>
       <Head>
-        <title>Psicosite</title>
+        <title>{globalSite.tituloSite}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" />
@@ -32,8 +32,7 @@ export default function Pagina({ site, menu, artigo, pagina }) {
 export async function getStaticPaths() {
   // montar paths com consulta ao banco de dados
   const db = require("../../src/db");
-  const arrayGlobal = globalSite.split('/');
-  const idSite = arrayGlobal[0];
+  const idSite = globalSite.idSite;
   const rMenu = await db.getMenu(idSite);
   const rMenuJSON = JSON.parse(rMenu);
   const paths = rMenuJSON.map( menu => { return { params: { pagina: menu.menu_nome } } });
@@ -46,12 +45,11 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   let { pagina } = context.params;
   if (!pagina) {
-    pagina = 'home';
+    pagina = globalSite.homeSite;
   }
   const db = require("../../src/db");
-  const arrayGlobal = globalSite.split('/');
-  const idSite = arrayGlobal[0];
-  const nomeSite = arrayGlobal[1];
+  const idSite = globalSite.idSite
+  const nomeSite = globalSite.nomeSite;
   const rSite = await db.getSite(nomeSite);
   const rMenu = await db.getMenu(idSite);
   const rArtigo = await db.getArtigo(pagina);
@@ -66,6 +64,6 @@ export async function getStaticProps(context) {
       artigo: rArtigoJSON,
       pagina: pagina,
     },
-    revalidate: 120
+    revalidate: 60
   }
 }

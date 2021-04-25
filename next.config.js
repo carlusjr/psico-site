@@ -5,5 +5,9 @@ module.exports = {
   },
   serverRuntimeConfig: {
     CONTATO_STRING: process.env.CONTATO_STRING
-  }
+  },
+  future: {
+    webpack5: false,
+  },
 }
+

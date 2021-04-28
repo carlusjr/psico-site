@@ -6,13 +6,13 @@ import { globalSite } from '../src/config'
 export default function Psicosite() {
 
   // index redireciona para /paginas/home
-  const rota = '/paginas/'+globalSite.homeSite;
-  
+  const router = useRouter();
+  const rota = '/paginas/' + globalSite.homeSite;
+
   useEffect(() => {
     router.push(rota)
   })
 
-  const router = useRouter();
   return (
     <div>
       <Head>

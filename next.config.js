@@ -1,9 +1,10 @@
 module.exports = {
-  env: {    
+  env: {
     GLOBAL_SITE: process.env.GLOBAL_SITE,
-    MYSQL_CONNSTRING: process.env.MYSQL_CONNSTRING
+    MYSQL_CONNSTRING: process.env.MYSQL_CONNSTRING,
+    UUID_JWT: process.env.UUID_JWT,
   },
-  serverRuntimeConfig: {    
+  serverRuntimeConfig: {
     CONTATO_STRING: process.env.CONTATO_STRING,
   },
   future: {

@@ -1,29 +1,20 @@
-import Head from 'next/head'
+import Layout from '../../src/layout';
+import Menu from '../../src/menu';
+import Conteudo from '../../src/conteudo';
+import Rodape from '../../src/rodape';
+import Pagamento from '../../src/pagamento';
+import Faleconosco from '../../src/faleconosco';
 import { globalSite } from '../../src/config'
-import Header from '../../src/header'
-import Menu from '../../src/menu'
-import Conteudo from '../../src/conteudo'
-import Rodape from '../../src/rodape'
-import Pagamento from '../../src/pagamento'
-import Faleconosco from '../../src/faleconosco'
 
-export default function Pagina({ site, menu, artigo, pagina }) {
+export default function Pagina({ menu, artigo, pagina }) {
   return (
     <div>
-      <Head>
-        <title>{globalSite.tituloSite}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-      </Head>
-      <section>
-        <Header titulo={site.site_titulo} />
+      <Layout>
         <Menu menuItens={menu} paginaAtiva={pagina} />
         <Conteudo artigo={artigo} paginaAtiva={pagina} />
         <Pagamento paginaAtiva={pagina} />
         <Faleconosco paginaAtiva={pagina} />
-      </section>
+      </Layout>
       <Rodape />
     </div>
   )
@@ -35,7 +26,7 @@ export async function getStaticPaths() {
   const idSite = globalSite.idSite;
   const rMenu = await db.getMenu(idSite);
   const rMenuJSON = JSON.parse(rMenu);
-  const paths = rMenuJSON.map( menu => { return { params: { pagina: menu.menu_nome } } });
+  const paths = rMenuJSON.map(menu => { return { params: { pagina: menu.menu_nome } } });
   return {
     paths,
     fallback: false
@@ -49,17 +40,13 @@ export async function getStaticProps(context) {
   }
   const db = require("../../src/db");
   const idSite = globalSite.idSite
-  const nomeSite = globalSite.nomeSite;
-  const rSite = await db.getSite(nomeSite);
   const rMenu = await db.getMenu(idSite);
   const rArtigo = await db.getArtigo(pagina);
-  const rSiteJSON = JSON.parse(rSite);
   const rMenuJSON = JSON.parse(rMenu);
   const rArtigoJSON = JSON.parse(rArtigo);
 
   return {
     props: {
-      site: rSiteJSON,
       menu: rMenuJSON,
       artigo: rArtigoJSON,
       pagina: pagina,

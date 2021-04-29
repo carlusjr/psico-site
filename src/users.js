@@ -59,10 +59,9 @@ export class Users {
       } else if (await this.getDbUserByName()) {
         this.error = 'Nome de usuário já cadastrado! ';
       } else {
-        const bcrypt = require('bcrypt');
-        const saltRounds = 10;
         const db = await connect();
-        const hashedPassword = await bcrypt.hash(this.user_password, saltRounds);
+        const bcrypt = require('bcryptjs');
+        const hashedPassword = bcrypt.hashSync(this.user_password, 10);
         const values = [this.user_name, hashedPassword, this.user_email];
         const [res] = await db.query("INSERT INTO users (user_name, user_password, user_email) VALUES ( ?, ?, ? )", values);
         return res;

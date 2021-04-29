@@ -12,7 +12,7 @@ export default async function login(request, response) {
 
     let isLogin = false;
     if (dbUser) {
-      const bcrypt = require('bcrypt');
+      const bcrypt = require('bcryptjs');
       const dbPassword = dbUser.user_password;
       isLogin = await bcrypt.compare(userPassword, dbPassword);
     }

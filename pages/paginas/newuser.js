@@ -38,7 +38,7 @@ export default function NewUser(props) {
         <p></p>
         <hr />
         <h3>Cadastro de Usuários</h3>
-        <h4>Usuário: {props.user}</h4>
+        <h4>Usuário logado: {props.user}</h4>
         <p></p>
         <form onSubmit={handleFormSubmit}>
           <label>

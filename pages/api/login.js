@@ -1,7 +1,7 @@
 import { Users } from '../../src/users';
 import cookie from 'cookie';
-import bcrypt from 'bcrypt'
 import { sign } from 'jsonwebtoken';
+import bcrypt from 'bcrypt'
 
 export default async function login(request, response) {
   // Somente método GET

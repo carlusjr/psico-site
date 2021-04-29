@@ -1,6 +1,4 @@
 import { connect } from "./db";
-import bcrypt from 'bcrypt'
-
 export class Users {
   constructor(user_name, user_password, user_email, user_id) {
     this.user_name = user_name;
@@ -61,6 +59,7 @@ export class Users {
       } else if (await this.getDbUserByName()) {
         this.error = 'Nome de usuário já cadastrado! ';
       } else {
+        const bcrypt = require('bcrypt');
         const saltRounds = 10;
         const db = await connect();
         const hashedPassword = await bcrypt.hash(this.user_password, saltRounds);

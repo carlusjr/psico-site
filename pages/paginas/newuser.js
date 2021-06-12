@@ -32,7 +32,7 @@ export default function NewUser(props) {
   }
 
   return (    
-    <Template isLogin>
+    <Template siteTitulo="Psicólogos na InterNET - Administração" isLogin>
       <p></p>
       <hr />
       <h3>Cadastro de Usuários</h3>

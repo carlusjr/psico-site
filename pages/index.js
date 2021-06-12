@@ -20,7 +20,7 @@ export async function getStaticProps() {
   const rArtigo = await db.getArtigo(pagina);
   const rMenuJSON = JSON.parse(rMenu);
   const rArtigoJSON = JSON.parse(rArtigo);
-
+  
   return {
     props: {
       menu: rMenuJSON,

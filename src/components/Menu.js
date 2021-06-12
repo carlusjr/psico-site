@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Menu({ menuItens, paginaAtiva }) {
+  if (!menuItens) {
+    return <></>;
+  }
   const [sendRequest, setSendRequest] = useState(false);
 
   useEffect(() => {

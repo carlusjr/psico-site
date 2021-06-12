@@ -1,5 +1,4 @@
-import Layout from '../../src/layout';
-import Rodape from "../../src/rodape";
+import Template from "../../src/template/Template"
 import { useState } from 'react';
 import { verify } from 'jsonwebtoken';
 
@@ -32,32 +31,30 @@ export default function NewUser(props) {
     }
   }
 
-  return (
-    <div>
-      <Layout>
-        <p></p>
-        <hr />
-        <h3>Cadastro de Usuários</h3>
-        <h4>Usuário logado: {props.user}</h4>
-        <p></p>
-        <form onSubmit={handleFormSubmit}>
-          <label>
-            <span>Nome do usuário</span>
-            <input type="text" name="user_name" required onChange={handleInputChange} />
-          </label>
-          <label>
-            <span>e-mail do usuário</span>
-            <input type="text" name="user_email" required onChange={handleInputChange} />
-          </label>
-          <label>
-            <span>Senha</span>
-            <input type="password" name="user_password" required onChange={handleInputChange} />
-          </label>
-          <input type="submit" value="Salvar" />
-        </form>
-      </Layout>
-      <Rodape isLogin />
-    </div>
+  return (    
+    <Template isLogin>
+      <p></p>
+      <hr />
+      <h3>Cadastro de Usuários</h3>
+      <h4>Usuário logado: {props.user}</h4>
+      <p></p>
+      <form onSubmit={handleFormSubmit}>
+        <label>
+          <span>Nome do usuário</span>
+          <input type="text" name="user_name" required onChange={handleInputChange} />
+        </label>
+        <label>
+          <span>e-mail do usuário</span>
+          <input type="text" name="user_email" required onChange={handleInputChange} />
+        </label>
+        <label>
+          <span>Senha</span>
+          <input type="password" name="user_password" required onChange={handleInputChange} />
+        </label>
+        <input type="submit" value="Salvar" />
+      </form>
+    </Template>
+    
   );
 }
 

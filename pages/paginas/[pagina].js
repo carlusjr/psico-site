@@ -1,22 +1,12 @@
-import Layout from '../../src/layout';
-import Menu from '../../src/menu';
-import Conteudo from '../../src/conteudo';
-import Rodape from '../../src/rodape';
-import Pagamento from '../../src/pagamento';
-import Faleconosco from '../../src/faleconosco';
+import Template from "../../src/template/Template"
+import Conteudo from '../../src/components/Conteudo';
 import { globalSite } from '../../src/config'
 
-export default function Pagina({ menu, artigo, pagina }) {
+export default function Pagina({ menu, artigo, pagina}) {
   return (
-    <div>
-      <Layout>
-        <Menu menuItens={menu} paginaAtiva={pagina} />
-        <Conteudo artigo={artigo} paginaAtiva={pagina} />
-        <Pagamento paginaAtiva={pagina} />
-        <Faleconosco paginaAtiva={pagina} />
-      </Layout>
-      <Rodape />
-    </div>
+    <Template menuItens={menu} paginaAtiva={pagina}>
+      <Conteudo artigo={artigo} paginaAtiva={pagina}/>
+    </Template>   
   )
 }
 
@@ -34,10 +24,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  let { pagina } = context.params;
-  if (!pagina) {
-    pagina = globalSite.homeSite;
-  }
+  const { pagina } = context.params;
+  
   const db = require("../../src/db");
   const idSite = globalSite.idSite
   const rMenu = await db.getMenu(idSite);
@@ -51,6 +39,6 @@ export async function getStaticProps(context) {
       artigo: rArtigoJSON,
       pagina: pagina,
     },
-    revalidate: 60
+    revalidate: 120
   }
 }

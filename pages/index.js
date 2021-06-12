@@ -1,25 +1,33 @@
-import Head from 'next/head'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { globalSite } from '../src/config'
+// Home Page do psico-site
+import Template from "../src/template/Template"
+import Conteudo from "../src/components/Conteudo"
+import { globalSite } from '../src/config';
 
-export default function Psicosite() {
-
-  // index redireciona para /paginas/home
-  const router = useRouter();
-  const rota = '/paginas/' + globalSite.homeSite;
-
-  useEffect(() => {
-    router.push(rota)
-  })
-
+export default function Psicosite(props) {  
   return (
-    <div>
-      <Head>
-        <title>{globalSite.tituloSite}</title>
-      </Head>
-      <h2>Carregando...</h2>
-    </div>
+    <Template menuItens={props.menu} paginaAtiva={props.pagina}>
+      <Conteudo artigo={props.artigo} paginaAtiva={props.pagina}/>
+    </Template>    
   )
+}
+
+export async function getStaticProps() {
+  const pagina=globalSite.homeSite;
+  const idSite = globalSite.idSite
+
+  const db = require("../src/db");
+  const rMenu = await db.getMenu(idSite);
+  const rArtigo = await db.getArtigo(pagina);
+  const rMenuJSON = JSON.parse(rMenu);
+  const rArtigoJSON = JSON.parse(rArtigo);
+
+  return {
+    props: {
+      menu: rMenuJSON,
+      artigo: rArtigoJSON,
+      pagina: pagina,
+    },
+    revalidate: 120
+  }
 }
 

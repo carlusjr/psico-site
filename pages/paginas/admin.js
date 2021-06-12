@@ -1,5 +1,4 @@
-import Layout from '../../src/layout';
-import Rodape from "../../src/rodape";
+import Template from "../../src/template/Template"
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
@@ -32,27 +31,24 @@ export default function Admin() {
     }
   }
 
-  return (
-    <div>
-      <Layout>
-        <p></p>
-        <hr />
-        <h3>Login do Administrador</h3>
-        <p></p>
-        <form onSubmit={handleFormSubmit}>
-          <label>
-            <span>Nome do usuário</span>
-            <input type="text" name="user_name" required onChange={handleInputChange} />
-          </label>
-          <label>
-            <span>Senha</span>
-            <input type="password" name="user_password" required onChange={handleInputChange} />
-          </label>
-          <input type="submit" value="Login" />
-        </form>
-      </Layout>
-      <Rodape isLogin />
-    </div>
+  return (    
+    <Template isLogin>
+      <p></p>
+      <hr />
+      <h3>Login do Administrador</h3>
+      <p></p>
+      <form onSubmit={handleFormSubmit}>
+        <label>
+          <span>Nome do usuário</span>
+          <input type="text" name="user_name" required onChange={handleInputChange} />
+        </label>
+        <label>
+          <span>Senha</span>
+          <input type="password" name="user_password" required onChange={handleInputChange} />
+        </label>
+        <input type="submit" value="Login" />
+      </form>
+    </Template>   
   );
 }
 

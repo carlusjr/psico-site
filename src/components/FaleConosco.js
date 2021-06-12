@@ -1,9 +1,6 @@
 import { useState } from 'react'
 
-export default function Faleconosco(props) {
-  if (props.paginaAtiva != 'faleconosco') {
-    return (<div></div>)
-  }
+export default function FaleConosco() {
   const [campos, setCampos] = useState({
     nome: '',
     email: '',

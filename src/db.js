@@ -1,3 +1,5 @@
+import { globalSite } from "./config";
+
 // Acesso ao Bando de Dados MySQL AWS
 const mysql = require("mysql2/promise");
 
@@ -46,4 +48,37 @@ async function getMenu(idSite) {
   return resJSON;
 }
 
-module.exports = { getArtigo, getSite, getMenu, connect };
+async function getProps(pagina) {
+  if (!pagina) {
+    pagina = globalSite.homeSite;
+  }
+  const idSite = globalSite.idSite;
+  const nomeSite = globalSite.nomeSite;
+
+  const rSite = await getSite(nomeSite);
+  const rMenu = await getMenu(idSite);
+  const rArtigo = await getArtigo(pagina);
+
+  const rSiteJSON = JSON.parse(rSite);
+  const rMenuJSON = JSON.parse(rMenu);
+  const rArtigoJSON = JSON.parse(rArtigo);
+
+  return {
+    menu: rMenuJSON,
+    artigo: rArtigoJSON,
+    pagina: pagina,
+    site: rSiteJSON,
+  };
+}
+
+async function getPaths() {
+  const idSite = globalSite.idSite;
+  const rMenu = await getMenu(idSite);
+  const rMenuJSON = JSON.parse(rMenu);
+  const paths = rMenuJSON.map((menu) => {
+    return { params: { pagina: menu.menu_nome } };
+  });
+  return paths;
+}
+
+module.exports = { getArtigo, getSite, getMenu, connect, getProps, getPaths };

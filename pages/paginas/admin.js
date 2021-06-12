@@ -32,7 +32,7 @@ export default function Admin() {
   }
 
   return (    
-    <Template isLogin>
+    <Template siteTitulo="Psicólogos na InterNET - Administração" isLogin >
       <p></p>
       <hr />
       <h3>Login do Administrador</h3>

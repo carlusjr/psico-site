@@ -1,5 +1,5 @@
 // Home Page do psico-site
-import Template from "../src/template/Template"
+import Template from "../src/templates/Template"
 import Conteudo from "../src/components/Conteudo"
 
 export default function Psicosite(props) {  

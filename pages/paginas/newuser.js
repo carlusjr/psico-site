@@ -1,8 +1,19 @@
-import Template from "../../src/template/Template"
-import { useState } from 'react';
-import { verify } from 'jsonwebtoken';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router'
+import useAuth from "../../src/contexts/AuthContext"
 
-export default function NewUser(props) {
+import Template from "../../src/templates/Template"
+
+export default function NewUser() {
+  const router = useRouter();
+  const { userLogged } = useAuth();
+
+  useEffect( () => {
+    if (!userLogged) {
+      router.push('/paginas/admin')      
+    }
+  });
+  
 
   const [campos, setCampos] = useState({
     user_name: '',
@@ -36,9 +47,9 @@ export default function NewUser(props) {
       <p></p>
       <hr />
       <h3>Cadastro de Usuários</h3>
-      <h4>Usuário logado: {props.user}</h4>
+      <h4>Usuário logado: {userLogged}</h4>
       <p></p>
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleFormSubmit} className="form-login">
         <label>
           <span>Nome do usuário</span>
           <input type="text" name="user_name" required onChange={handleInputChange} />
@@ -58,6 +69,7 @@ export default function NewUser(props) {
   );
 }
 
+/*
 export async function getServerSideProps(context) {
   const mySecret = process.env.UUID_JWT;
   const token = (context.req.cookies.jwtpsiconet || '');
@@ -78,4 +90,4 @@ export async function getServerSideProps(context) {
     }
   }
 }
-
+*/

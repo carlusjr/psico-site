@@ -1,38 +1,50 @@
 import { Users } from '../../src/users';
-import cookie from 'cookie';
 import { sign } from 'jsonwebtoken';
+import cookie from 'cookie'
 
 export default async function login(request, response) {
-  // Somente método GET
-  if (request.method === "POST") {
-    const userName = request.body.user_name;
-    const userPassword = request.body.user_password;
-    const myUser = new Users(userName, userPassword);
-    const dbUser = await myUser.getDbUserByName(userName);
 
-    let isLogin = false;
-    if (dbUser) {
-      const bcrypt = require('bcryptjs');
-      const dbPassword = dbUser.user_password;
-      isLogin = await bcrypt.compare(userPassword, dbPassword);
-    }
-    if (isLogin) {
-      const user = { id: dbUser.user_id, username: dbUser.user_name };
-      // JWToken de 30 minutos
-      const jwt = sign(user, process.env.UUID_JWT, { expiresIn: 15 * 60 });
-      // Insere cookie com JWT no cabeçalho da requisição
-      response.setHeader('Set-Cookie', cookie.serialize('jwtpsiconet', jwt, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
-        sameSite: 'strict',
-        maxAge: 900,
-        path: '/'
-      }));
-      response.json({ message: 'Successful authentication.' });
-    } else {
-      response.status(401).json({ message: "Sorry, failed login." });
-    }
-  } else {
-    response.status(405).json({ message: "API only support POST method." });
+  let logged = false;
+
+  // Somente método POST
+  if (request.method !== "POST") {
+    response.status(405).json({ message: "API suporta apenas método POST." });
+    return logged;
   }
+
+  // Obtém credenciais do usuário pelo request    
+  const userName = request.body.user_name;
+  const userPassword = request.body.user_password;
+  const myUser = new Users(userName, userPassword);
+
+  // Pesquisa usuário no Banco de Dados
+  const dbUser = await myUser.getDbUserByName(userName);       
+  if (dbUser) {
+    // Se encontrou usuário, verifica a senha encriptada
+    const bcrypt = require('bcryptjs');
+    const dbPassword = dbUser.user_password;
+    logged = await bcrypt.compare(userPassword, dbPassword);
+  }
+
+  // Usuário ou senha inválidos
+  if (!logged) {
+    response.status(401).json({ message: "Falha de login, usuário ou senha inválido!" });      
+    return logged;
+  }
+  
+  // Token gerado no servidor
+  
+  const user = { id: dbUser.user_id, username: dbUser.user_name };
+  const jwt = sign(user, process.env.UUID_JWT, { expiresIn: 15 * 60 });
+
+  // Insere cookie com JWT no cabeçalho da requisição
+  response.setHeader('Set-Cookie', cookie.serialize('jwtpsicosite', jwt, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV !== 'development',
+    sameSite: 'strict',
+    maxAge: 900, //15 minutos
+    path: '/'
+  }));
+  
+  response.json({ userId: dbUser.user_id, userName: dbUser.user_name });
 }

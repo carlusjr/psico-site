@@ -2,16 +2,16 @@ import Link from "next/link";
 import ImagemTop from "./Imagem";
 import Pagamento from "./Pagamento";
 import FaleConosco from "./FaleConosco";
+import SobreAdmin from "./SobreAdmin";
 
-const extraPage = { pagamento: Pagamento, faleconosco: FaleConosco };
+const extraPage = { pagamento: Pagamento, faleconosco: FaleConosco, sobre: SobreAdmin };
 
 export default function Conteudo({ artigo, paginaAtiva }) {
   if (!paginaAtiva) {
     paginaAtiva = "home";
   }
 
-  const PageExtra = extraPage[paginaAtiva];
-  const isPagamento = paginaAtiva === "pagamento";
+  const PageExtra = extraPage[paginaAtiva];  
   const arrayTexto = artigo.art_texto.split("\n");
 
   // Insere em cada parágrafo os links para e-mail ou para outras páginas

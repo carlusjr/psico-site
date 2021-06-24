@@ -1,4 +1,4 @@
-import Template from "../../src/template/Template"
+import Template from "../../src/templates/Template"
 import Conteudo from '../../src/components/Conteudo';
 
 export default function Pagina({ menu, artigo, pagina, site}) {

@@ -43,8 +43,8 @@ li {
   margin-top: 10px;
 }
 
-form {
-  max-width: 500;
+.form-login {
+  max-width: 300px;
 }
 
 .psicologos {

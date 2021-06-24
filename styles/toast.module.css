@@ -1,0 +1,103 @@
+.container {
+  font-size: 14px;
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 9999;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topRight {
+  top: 15px;
+  right: 15px;
+  animation: toast-in-right 0.7s;
+}
+
+.bottomRight {
+  bottom: 15px;
+  right: 15px;
+  animation: toast-in-right .07s;
+}
+
+.topLeft {
+  top: 25px;
+  left: 20px;
+  animation: toast-in-left 0.7s;
+}
+
+.bottomLeft {
+  bottom: 50px;
+  left: 40px;
+  animation: toast-in-left 0.7s;
+}
+
+
+
+.toast {
+  background-color: green; 
+  transition: 0.3s ease;
+  position: relative;
+  pointer-events: auto;
+  overflow: hidden;
+  margin: 0 0 15px;  
+  padding: 20px;
+  width: 350px;
+  max-height: 100px;
+  border-radius: 3px;
+  box-shadow: 0 0 10px black;
+  color: white;
+  opacity: 0.9;
+}
+
+.toast:hover {
+  box-shadow: 0 0 12px blue;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.message {
+  margin: 0;
+  text-align: left;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.image {
+  float: left;
+  margin-right: 15px;
+  font-size: 32px;
+}
+
+.close {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 20px;
+}
+
+@keyframes toast-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);    
+  }
+}
+
+@keyframes toast-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);    
+  }
+}

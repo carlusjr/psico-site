@@ -37,16 +37,16 @@ export default async function contato(req, res) {
           subject: `${req.body.nome}`,
           text: `${req.body.mensagem}`
         });
-        res.status(200).json({ message: "Mensagem enviada com sucesso!" });
+        res.status(200).json({ message: "Mensagem enviada com sucesso!", ok: true });
   
       } catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(400).json({ message: error.message, ok: false })
       }
     } else {
-      res.status(400).json({ message: "Parâmetros não recebidos!" })
+      res.status(400).json({ message: "Parâmetros não recebidos!", ok: false })
     }
   } else {
-    res.status(400).json({ message: "String de configuração inválida!" })
+    res.status(400).json({ message: "String de configuração inválida!", ok: false })
   }
 }
 

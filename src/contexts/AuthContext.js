@@ -1,13 +1,18 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { parseCookies } from "nookies";
-import { verify } from 'jsonwebtoken';
+// import { parseCookies } from "nookies";
+// import { verify } from 'jsonwebtoken';
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [userLogged, setUserLogged] = useState(null);  
+  const [user, setUser] = useState({
+    logged: false,
+    id: "",
+    name: "",
+  });  
+  
+  /*
   const mySecret = process.env.UUID_JWT;
-
   useEffect(()=>{
     if (!userLogged) {
       const { "jwt.psico-site": token } = parseCookies();    
@@ -23,9 +28,10 @@ export const AuthProvider = ({ children }) => {
       }
     }
   },[])
+  */
     
   return (
-    <AuthContext.Provider value={{ userLogged, setUserLogged }}>
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   );
@@ -35,10 +41,4 @@ const useAuth = () => useContext(AuthContext);
 
 export default useAuth
 
-    //   verify(token, mySecret, function (err, decoded) {
-    //     if ((!err) && (decoded)) {
-    //       setUserLogged(decoded.username);
-    //       console.log(userLogged);
-    //     }
-    //   });      
-    // }
+    

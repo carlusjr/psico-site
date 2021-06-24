@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import useAuth from "../../src/contexts/AuthContext"
-
 import Template from "../../src/templates/Template"
+import { verify } from 'jsonwebtoken';
 
-export default function NewUser() {
+export default function NewUser({ userJWT }) {
   const router = useRouter();
-  const { userLogged } = useAuth();
+  const { user, setUser } = useAuth();
 
+  
   useEffect( () => {
-    if (!userLogged) {
+    if (!user.logged && !userJWT.logged) {        
       router.push('/paginas/admin')      
     }
-  });
-  
+    if (userJWT) {
+      setUser(userJWT);
+    }
+  });  
 
   const [campos, setCampos] = useState({
     user_name: '',
@@ -47,7 +50,7 @@ export default function NewUser() {
       <p></p>
       <hr />
       <h3>Cadastro de Usuários</h3>
-      <h4>Usuário logado: {userLogged}</h4>
+      <h4>Usuário logado: {user.name}</h4>
       <p></p>
       <form onSubmit={handleFormSubmit} className="form-login">
         <label>
@@ -69,25 +72,22 @@ export default function NewUser() {
   );
 }
 
-/*
+
 export async function getServerSideProps(context) {
   const mySecret = process.env.UUID_JWT;
-  const token = (context.req.cookies.jwtpsiconet || '');
-  let userName = '';
-  verify(token, mySecret, function (err, decoded) {
-    if ((!err) && (decoded)) {
-      userName = decoded.username;
-    } else {
-      if (context.res) {
-        context.res.writeHead(302, { Location: '/paginas/admin' });
-        context.res.end();
-      }
-    }
-  });
+  const token = (context.req.cookies.jwtpsicosite || '');
+  const userJWT = { logged: false, id: "", name:"" }
+  try {
+    const decoded = verify(token, mySecret);
+    userJWT.logged = true;
+    userJWT.id = decoded.id;
+    userJWT.name = decoded.username;    
+  }
+  catch {    
+  }
+  
   return {
-    props: {
-      user: userName,
-    }
+    props: { userJWT }
   }
 }
-*/
+

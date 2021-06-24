@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { setCookie } from "nookies";
-import { sign } from "jsonwebtoken";
 import Template from "../../src/templates/Template";
+import useAuth from "../../src/contexts/AuthContext";
 
 export default function Admin() {
+  const { setUser } = useAuth();
   const [campos, setCampos] = useState({
     user_name: "",
     user_password: "",
   });
   const router = useRouter();
-  
+    
   function handleInputChange(event) {
     campos[event.target.name] = event.target.value;
     setCampos(campos);
@@ -28,16 +28,10 @@ export default function Admin() {
     const resJSON = await res.json();
 
     if (!res.ok) {
-      alert(resJSON.message);
+      alert(resJSON.message);      
       return;
-    }
-
-    // Token (JWT) gerado no client
-    const jwt = sign(resJSON, process.env.UUID_JWT, { expiresIn: 15 * 60 });
-    setCookie(null, "jwt.psico-site", jwt, {
-      maxAge: 15 * 60,      
-      path: "/",
-    });    
+    }    
+    setUser({ logged: true, id: resJSON.UserId, name: resJSON.userName });
     router.push("/paginas/newuser");
   }
 

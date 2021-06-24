@@ -1,4 +1,6 @@
 import { Users } from '../../src/users';
+import { sign } from 'jsonwebtoken';
+import cookie from 'cookie'
 
 export default async function login(request, response) {
 
@@ -31,19 +33,18 @@ export default async function login(request, response) {
   }
   
   // Token gerado no servidor
-  /*
+  
   const user = { id: dbUser.user_id, username: dbUser.user_name };
   const jwt = sign(user, process.env.UUID_JWT, { expiresIn: 15 * 60 });
 
   // Insere cookie com JWT no cabeçalho da requisição
-  response.setHeader('Set-Cookie', cookie.serialize('jwtpsiconet', jwt, {
+  response.setHeader('Set-Cookie', cookie.serialize('jwtpsicosite', jwt, {
     httpOnly: true,
     secure: process.env.NODE_ENV !== 'development',
     sameSite: 'strict',
     maxAge: 900, //15 minutos
     path: '/'
   }));
-  */
-
+  
   response.json({ userId: dbUser.user_id, userName: dbUser.user_name });
 }

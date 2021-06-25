@@ -80,7 +80,7 @@ export default function FaleConosco() {
 
         <input type="submit" value={btnEnviar} disabled={ (btnEnviar !== "Enviar") }/>        
       </form>      
-      <Toast position="bottomLeft" setTime={4000} />
+      <Toast position="bottomLeft" setTime={5000} />
     </div>
   );
 }

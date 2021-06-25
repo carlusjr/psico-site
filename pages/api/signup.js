@@ -9,7 +9,7 @@ export default async function signup(request, response) {
     const myUser = new Users(userName, userPassword, userEmail);
     const res = await myUser.saveUserDb();
     if (res) {
-      response.json({ message: `Usuário cadastrado com sucesso! - Id: ${res.insertId}` });
+      response.json({ message: `Usuário cadastrado com sucesso!` });
     } else {
       response.status(400).json({ message: myUser.error });
     }

@@ -19,14 +19,14 @@
 }
 
 .topLeft {
-  top: 25px;
+  top: 50px;
   left: 20px;
   animation: toast-in-left 0.7s;
 }
 
 .bottomLeft {
   bottom: 50px;
-  left: 40px;
+  left: 20px;
   animation: toast-in-left 0.7s;
 }
 

@@ -1,10 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router'
-import useAuth from "../../src/contexts/AuthContext"
-import Template from "../../src/templates/Template"
 import { verify } from 'jsonwebtoken';
+import { ToastContext } from "../../src/contexts/toastContext";
+import { Toast } from "../../src/components/Toast"
+import { v4 as uuid } from "uuid";
+import Template from "../../src/templates/Template"
+import useAuth from "../../src/contexts/AuthContext"
+
 
 export default function NewUser({ userJWT }) {
+  const { dispatch } = useContext(ToastContext);
   const router = useRouter();
   const { user, setUser } = useAuth();
 
@@ -32,16 +37,33 @@ export default function NewUser({ userJWT }) {
   async function handleFormSubmit(event) {
     event.preventDefault();
 
+    // API para inclusão de usuário no banco de dados
     const res = await fetch('/api/signup', {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       credentials: 'include',
       body: JSON.stringify(campos)
     });
-    const resJSON = await res.json();
-    alert(resJSON.message);
+    const resJSON = await res.json();   
+    
+    
     if (res.ok) {
+      // Se inclusão foi bem sucedida
+      dispatch({type: "ADD_NOTIFICATION", payload: { 
+        id: uuid(), 
+        type: "SUCCESS", 
+        title: resJSON.message,
+        message: ""
+      }});
       event.target.reset();
+    } else {
+      // Senão, exibe mensagem de erro.
+      dispatch({type: "ADD_NOTIFICATION", payload: { 
+        id: uuid(), 
+        type: "ERROR", 
+        title: resJSON.message,
+        message: "Atenção as regras de cadastro."
+      }});
     }
   }
 
@@ -67,6 +89,7 @@ export default function NewUser({ userJWT }) {
         </label>
         <input type="submit" value="Salvar" />
       </form>
+      <Toast position="topLeft" setTime={5000} />
     </Template>
     
   );
@@ -74,14 +97,19 @@ export default function NewUser({ userJWT }) {
 
 
 export async function getServerSideProps(context) {
+
+  // verifica a existência de token gravado em cookie
   const mySecret = process.env.UUID_JWT;
-  const token = (context.req.cookies.jwtpsicosite || '');
+  const token = (context.req.cookies.jwtpsicosite || null);
   const userJWT = { logged: false, id: "", name:"" }
   try {
-    const decoded = verify(token, mySecret);
-    userJWT.logged = true;
-    userJWT.id = decoded.id;
-    userJWT.name = decoded.username;    
+    // Se existe token, valida o mesmo para obter usuário logado
+    if (token) {
+      const decoded = verify(token, mySecret);
+      userJWT.logged = true;
+      userJWT.id = decoded.id;
+      userJWT.name = decoded.username;
+    }
   }
   catch {    
   }

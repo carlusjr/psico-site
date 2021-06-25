@@ -105,6 +105,11 @@ input[type="submit"]:hover {
   cursor: pointer;
 }
 
+input[type="submit"]:hover:disabled {
+  background-color: rgb(120, 120, 120);
+}
+
+
 .topnav {
   overflow: hidden;
   background-color: #333;

@@ -9,9 +9,10 @@ import useAuth from "../../src/contexts/AuthContext"
 
 
 export default function NewUser({ userJWT }) {
-  const { dispatch } = useContext(ToastContext);
   const router = useRouter();
+  const { dispatch } = useContext(ToastContext);  
   const { user, setUser } = useAuth();
+  const [btnSalvar, setBtnSalvar] = useState("Salvar");
 
   
   useEffect( () => {
@@ -35,6 +36,7 @@ export default function NewUser({ userJWT }) {
   }
 
   async function handleFormSubmit(event) {
+    setBtnSalvar("Aguarde...");
     event.preventDefault();
 
     // API para inclusão de usuário no banco de dados
@@ -65,6 +67,7 @@ export default function NewUser({ userJWT }) {
         message: "Atenção as regras de cadastro."
       }});
     }
+    setBtnSalvar("Salvar");
   }
 
   return (    
@@ -87,9 +90,9 @@ export default function NewUser({ userJWT }) {
           <span>Senha</span>
           <input type="password" name="user_password" required onChange={handleInputChange} />
         </label>
-        <input type="submit" value="Salvar" />
+        <input type="submit" value={btnSalvar} disabled={ (btnSalvar !== "Salvar") } />
       </form>
-      <Toast position="topLeft" setTime={5000} />
+      <Toast position="topLeft" setTime={3500} />
     </Template>
     
   );

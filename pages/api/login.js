@@ -28,7 +28,7 @@ export default async function login(request, response) {
 
   // Usuário ou senha inválidos
   if (!logged) {
-    response.status(401).json({ message: "Falha de login, usuário ou senha inválido!" });      
+    response.status(401).json({ message: "Ops! Usuário e/ou senha inválidos!" });      
     return logged;
   }
   

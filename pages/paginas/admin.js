@@ -10,6 +10,7 @@ import useAuth from "../../src/contexts/AuthContext";
 export default function Admin() {
   const { dispatch } = useContext(ToastContext);
   const { setUser } = useAuth();
+  const [btnLogin, setBtnLogin] = useState("Login");
   const [campos, setCampos] = useState({
     user_name: "",
     user_password: "",
@@ -22,6 +23,7 @@ export default function Admin() {
   }
 
   async function handleFormSubmit(event) {
+    setBtnLogin("Aguarde...");    
     event.preventDefault();
 
     const res = await fetch("/api/login", {
@@ -31,6 +33,7 @@ export default function Admin() {
       body: JSON.stringify(campos),
     });
     const resJSON = await res.json();
+    setBtnLogin("Login");
 
     if (!res.ok) {
       dispatch({type: "ADD_NOTIFICATION", payload: { 
@@ -70,9 +73,9 @@ export default function Admin() {
             onChange={handleInputChange}
           />
         </label>
-        <input type="submit" value="Login" />
+        <input type="submit" value={btnLogin} disabled={ (btnLogin !== "Login") }/>
       </form>   
-      <Toast position="topLeft" setTime={5000} />   
+      <Toast position="topLeft" setTime={3500} />   
     </Template>
   );
 }

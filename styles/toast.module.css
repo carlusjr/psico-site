@@ -19,14 +19,14 @@
 }
 
 .topLeft {
-  top: 25px;
-  left: 20px;
+  top: 50px;
+  left: 15px;
   animation: toast-in-left 0.7s;
 }
 
 .bottomLeft {
   bottom: 50px;
-  left: 40px;
+  left: 15px;
   animation: toast-in-left 0.7s;
 }
 
@@ -40,8 +40,8 @@
   overflow: hidden;
   margin: 0 0 15px;  
   padding: 20px;
-  width: 350px;
-  max-height: 100px;
+  width: 330px;
+  max-height: 90px;
   border-radius: 3px;
   box-shadow: 0 0 10px black;
   color: white;

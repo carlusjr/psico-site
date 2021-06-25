@@ -39,6 +39,14 @@ export class Users {
     }
   }
 
+  // Lista de usuários cadastrados 
+  async getAllDbUsers() {   
+    const db = await connect();
+    const [dbRes] = await db.query(
+      "SELECT user_id, user_name, user_email FROM users");    
+    return dbRes
+  }
+
   // Recupera usuário do banco de dados pelo e-mail
   async findUserByEmail(user_email) {
     user_email = user_email || this.user_email;

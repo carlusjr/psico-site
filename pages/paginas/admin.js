@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
+import { ToastContext } from "../../src/contexts/toastContext";
+import { Toast } from "../../src/components/Toast"
+import { v4 as uuid } from "uuid";
 import Template from "../../src/templates/Template";
 import useAuth from "../../src/contexts/AuthContext";
 
+
 export default function Admin() {
+  const { dispatch } = useContext(ToastContext);
   const { setUser } = useAuth();
+  const [btnLogin, setBtnLogin] = useState("Login");
   const [campos, setCampos] = useState({
     user_name: "",
     user_password: "",
@@ -17,6 +23,7 @@ export default function Admin() {
   }
 
   async function handleFormSubmit(event) {
+    setBtnLogin("Aguarde...");    
     event.preventDefault();
 
     const res = await fetch("/api/login", {
@@ -26,9 +33,15 @@ export default function Admin() {
       body: JSON.stringify(campos),
     });
     const resJSON = await res.json();
+    setBtnLogin("Login");
 
     if (!res.ok) {
-      alert(resJSON.message);      
+      dispatch({type: "ADD_NOTIFICATION", payload: { 
+        id: uuid(), 
+        type: "ERROR", 
+        title: resJSON.message,
+        message: "Verifique suas credenciais."
+      }});      
       return;
     }    
     setUser({ logged: true, id: resJSON.UserId, name: resJSON.userName });
@@ -60,8 +73,9 @@ export default function Admin() {
             onChange={handleInputChange}
           />
         </label>
-        <input type="submit" value="Login" />
-      </form>      
+        <input type="submit" value={btnLogin} disabled={ (btnLogin !== "Login") }/>
+      </form>   
+      <Toast position="topLeft" setTime={3500} />   
     </Template>
   );
 }

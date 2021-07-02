@@ -40,11 +40,12 @@ export class Users {
   }
 
   // Lista de usuários cadastrados 
-  async getAllDbUsers() {   
+  async getAllDbUsers() {       
     const db = await connect();
     const [dbRes] = await db.query(
-      "SELECT user_id, user_name, user_email FROM users");    
-    return dbRes
+      "SELECT user_id, user_name, user_email FROM users");
+    const resJSON = JSON.stringify(dbRes);
+    return resJSON;
   }
 
   // Recupera usuário do banco de dados pelo e-mail
@@ -57,6 +58,23 @@ export class Users {
       const row = dbRes[0];
       return row
     }
+  }
+
+  async deleteUserById(user_id) {
+    user_id = user_id || this.user_id;
+
+    if (!user_id) {
+      this.error= "Id do usuário não informado!"
+      return false;
+    }  
+    try {
+      const db = await connect();
+      const dbRes = await db.query( "DELETE FROM users WHERE user_id = ?", user_id);
+      return dbRes
+    } catch (e) {
+      this.error= "Não foi possível excluir este usuário!"
+      return false;
+    }    
   }
 
   // Salva usuário no banco de dados

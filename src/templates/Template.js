@@ -1,18 +1,19 @@
-import Header from "../components/Header";
+import Head from "../components/Head";
+import Header from "../components/Header"
 import Menu from "../components/Menu";
 import Rodape from "../components/Rodape";
 import { globalSite } from "../config";
 
 
-export default function Template({ menuItens, paginaAtiva, siteTitulo, isLogin, children }) {
+export default function Template({ menuItens, paginaAtiva, siteTitulo, subTitulo, userLogged, children }) {
   return (
     <>
-      <Header title={globalSite.site_titulo} />
+      <Head title={globalSite.tituloSite} />
       <section>
-        <h1>{siteTitulo}</h1>
+        <Header titulo={siteTitulo} subTitulo={subTitulo} userLogged={userLogged} />
         <Menu menuItens={menuItens} paginaAtiva={paginaAtiva} />
         {children}
-        <Rodape isLogin={isLogin} />
+        <Rodape homeLink={ paginaAtiva == "admin" || !!userLogged } />
       </section>
     </>
   );

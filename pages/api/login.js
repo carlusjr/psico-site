@@ -9,7 +9,7 @@ export default async function login(request, response) {
   // Somente método POST
   if (request.method !== "POST") {
     response.status(405).json({ message: "API suporta apenas método POST." });
-    return logged;
+    return;
   }
 
   // Obtém credenciais do usuário pelo request    
@@ -29,7 +29,7 @@ export default async function login(request, response) {
   // Usuário ou senha inválidos
   if (!logged) {
     response.status(401).json({ message: "Ops! Usuário e/ou senha inválidos!" });      
-    return logged;
+    return;
   }
   
   // Token gerado no servidor

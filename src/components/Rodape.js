@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Rodape({ isLogin }) {
+export default function Rodape({ homeLink }) {
   return (
     <div className="footer">
       <p>
@@ -9,7 +9,7 @@ export default function Rodape({ isLogin }) {
           <a>Carlos Roberto da Silva Jr.</a>
         </Link>
       </p>
-      {isLogin ? (
+      {homeLink ? (
         <p>
           <Link href="/paginas/home">
             <a className="back-top">Volta para HOME</a>

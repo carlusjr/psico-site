@@ -9,7 +9,7 @@ import useAuth from "../../src/contexts/AuthContext";
 
 export default function Admin() {
   const { dispatch } = useContext(ToastContext);
-  const { setUser } = useAuth();
+  const { setUserAuth } = useAuth();
   const [btnLogin, setBtnLogin] = useState("Login");
   const [campos, setCampos] = useState({
     user_name: "",
@@ -44,12 +44,15 @@ export default function Admin() {
       }});      
       return;
     }    
-    setUser({ logged: true, id: resJSON.UserId, name: resJSON.userName });
+    setUserAuth({ logged: true, id: resJSON.UserId, name: resJSON.userName });
     router.push("/paginas/newuser");
   }
 
   return (
-    <Template siteTitulo="Psicólogos na InterNET - Administração" isLogin>
+    <Template 
+      siteTitulo="PSICÓLOGOS na InterNET - Administração"      
+      paginaAtiva="admin"
+    >
       <p></p>
       <hr />
       <h3>Login do Administrador</h3>

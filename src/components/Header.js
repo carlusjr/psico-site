@@ -1,15 +1,23 @@
-import Head from 'next/head';
+import Router from 'next/router'
 
-export default function Header({ title }) {
+const Header = ({ titulo, userLogged }) => {
+
+  const handleLogout = async () => {
+    const res = await fetch("/api/logout");
+    if (res.ok) {
+      Router.reload(window.location.pathname)    
+    }
+  }
+
   return (
-    <>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-        <title>{title}</title>
-      </Head>      
-    </>
+    <header>      
+      <h1>{titulo}</h1>      
+      <div className={(userLogged) ? "headerUser" : "headerLogout"}>
+        <h5>{ (userLogged) ? "Usuário: "+userLogged : ""}</h5>
+        <button onClick={handleLogout}>Logout</button>
+      </div>      
+    </header>
   )
 }
+
+export default Header

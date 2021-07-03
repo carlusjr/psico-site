@@ -1,0 +1,28 @@
+.userCard {
+  background-color: rgb(240, 238, 238);
+  border: 1px solid black;
+  margin: 10px 0;
+  padding: 10px;
+  max-width: 300px;
+  box-shadow: 1px 1px 2px black;
+}
+
+.userName {
+  color: blue;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.userEmail {
+  display: block;
+  margin-left: 20px;
+}
+
+.userId {
+  float: right;
+}
+
+.btnExcluir {
+  float: right;
+  padding: 2px;
+}

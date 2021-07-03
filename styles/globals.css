@@ -1,6 +1,6 @@
 html,
 container {
-  margin-top: 0px;
+  margin: 0px;
   border-top: 3px solid #0088cc;
   padding: 20px;
   display: block;
@@ -10,13 +10,34 @@ container {
   border-radius: 5px;
 }
 
-h1 {
-  color: black;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  font-size: 200%;
-  font-weight: bold;
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0;
 }
+
+header h1, header h2 {
+  margin: 0 10px 5px 0;
+}
+
+header h5 {
+  margin: 0;
+}
+
+header button {
+  float: right;
+}
+
+
+.headerUser {
+  visibility: visible;
+}
+
+.headerLogout {
+  visibility: hidden;    
+}
+
 
 h3 {
   color: #0088cc;

@@ -1,44 +1,37 @@
 import { createContext, useState, useEffect, useContext } from "react";
-// import { parseCookies } from "nookies";
-// import { verify } from 'jsonwebtoken';
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    logged: false,
-    id: "",
-    name: "",
-  });  
+  const [userAuth, setUserAuth] = useState({ logged: false, logging: true, id: null, name: null });
   
-  /*
-  const mySecret = process.env.UUID_JWT;
-  useEffect(()=>{
-    if (!userLogged) {
-      const { "jwt.psico-site": token } = parseCookies();    
-      if (token) {
-        try {
-          const decoded = verify(token, mySecret);
-          setUserLogged(decoded.userName);
-        }
-        catch (e) {
-          setUserLogged(null);
-          console.log(e.message);
-        }      
-      }
+  const isLoggedJWT = async () => {
+    const res = await fetch("/api/logged");
+    const resJSON = await res.json();    
+    if (res.ok) {
+      return resJSON;
+    } else {
+      return { logged: false, logging: false, id: null, name: null };
     }
-  },[])
-  */
-    
+  };
+
+  useEffect(() => {    
+    if (!userAuth.logged) {
+      userAuth.logging = true;
+      isLoggedJWT().then( (res) => {        
+        setUserAuth(res);
+        userAuth.logging = false;
+      });
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ userAuth, setUserAuth }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 const useAuth = () => useContext(AuthContext);
 
-export default useAuth
-
-    
+export default useAuth;

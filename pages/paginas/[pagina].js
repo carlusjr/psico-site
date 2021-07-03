@@ -3,8 +3,15 @@ import Conteudo from '../../src/components/Conteudo';
 
 export default function Pagina({ menu, artigo, pagina, site}) {
   return (
-    <Template menuItens={menu} paginaAtiva={pagina} siteTitulo={site.site_titulo}>
-      <Conteudo artigo={artigo} paginaAtiva={pagina}/>
+    <Template 
+      menuItens={menu} 
+      paginaAtiva={pagina} 
+      siteTitulo={site.site_titulo}
+    >
+      <Conteudo 
+        artigo={artigo} 
+        paginaAtiva={pagina}
+      />
     </Template>   
   )
 }

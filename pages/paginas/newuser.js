@@ -1,124 +1,158 @@
-import { useEffect, useState, useContext } from 'react';
-import { useRouter } from 'next/router'
-import { verify } from 'jsonwebtoken';
+import { useState, useContext, useEffect } from "react";
 import { ToastContext } from "../../src/contexts/toastContext";
-import { Toast } from "../../src/components/Toast"
+import { Toast } from "../../src/components/Toast";
 import { v4 as uuid } from "uuid";
-import Template from "../../src/templates/Template"
-import useAuth from "../../src/contexts/AuthContext"
+import { useRouter } from 'next/router'
+import Template from "../../src/templates/Template";
+import useAuth from "../../src/contexts/AuthContext";
+import UserCard from "../../src/components/UserCard";
 
-
-export default function NewUser({ userJWT }) {
-  const router = useRouter();
-  const { dispatch } = useContext(ToastContext);  
-  const { user, setUser } = useAuth();
-  const [btnSalvar, setBtnSalvar] = useState("Salvar");
-
+export default function NewUser() {
   
-  useEffect( () => {
-    if (!user.logged && !userJWT.logged) {        
-      router.push('/paginas/admin')      
-    }
-    if (userJWT) {
-      setUser(userJWT);
-    }
-  });  
-
+  const { userAuth } = useAuth();
+  const { dispatch } = useContext(ToastContext);
+  const [btnSalvar, setBtnSalvar] = useState("Salvar");    
+  const [listUsers, setListUsers] = useState([]);
+  const router = useRouter(); 
   const [campos, setCampos] = useState({
-    user_name: '',
-    user_password: '',
-    user_email: ''
+    user_name: "",
+    user_password: "",
+    user_email: "",
   });
 
+  const dbListUsers = async () => {
+    const allUsers = await fetch("/api/userdb", {
+      method: "GET",
+      headers: { "Content-type": "application/json" },
+      credentials: "include",      
+    });
+    const allUsersJSON = await allUsers.json();
+    if (allUsersJSON) {      
+      setListUsers(allUsersJSON);
+    }   
+  }
+  
+  useEffect(() => {
+    if (!userAuth.logging && !userAuth.logged) {
+      router.push("/paginas/admin");    
+    } else {
+      console.log("Effect");
+      dbListUsers();
+    }
+  }, [userAuth, btnSalvar])
+
+  function sendToast( success, title ) {
+    const typeToast = success ? "SUCCESS" : "ERROR";
+    dispatch({
+      type: "ADD_NOTIFICATION",
+      payload: {
+        id: uuid(),
+        type: typeToast,
+        title: title,
+        message: ""
+      },
+    });
+  }
+ 
   function handleInputChange(event) {
     campos[event.target.name] = event.target.value;
     setCampos(campos);
   }
 
+  // Remove usuário
+  async function handleRemoveUser(userId) {
+    setBtnSalvar("Aguarde...");
+    const res = await fetch("/api/userdb", {
+      method: "DELETE",
+      headers: { "Content-type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ user_id: userId }),
+    });
+    const resJSON = await res.json();
+    setBtnSalvar("Salvar");
+    sendToast( res.ok, resJSON.message );      
+  }
+
+
+  // Salva novo usuário  
   async function handleFormSubmit(event) {
     setBtnSalvar("Aguarde...");
     event.preventDefault();
 
     // API para inclusão de usuário no banco de dados
-    const res = await fetch('/api/signup', {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify(campos)
+    const res = await fetch("/api/userdb", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(campos),
     });
-    const resJSON = await res.json();   
-    
-    
-    if (res.ok) {
-      // Se inclusão foi bem sucedida
-      dispatch({type: "ADD_NOTIFICATION", payload: { 
-        id: uuid(), 
-        type: "SUCCESS", 
-        title: resJSON.message,
-        message: ""
-      }});
-      event.target.reset();
-    } else {
-      // Senão, exibe mensagem de erro.
-      dispatch({type: "ADD_NOTIFICATION", payload: { 
-        id: uuid(), 
-        type: "ERROR", 
-        title: resJSON.message,
-        message: "Atenção as regras de cadastro."
-      }});
-    }
+    const resJSON = await res.json();
+    sendToast( res.ok, resJSON.message );   
     setBtnSalvar("Salvar");
+    if (res.ok) {
+      event.target.reset();
+    }
   }
 
-  return (    
-    <Template siteTitulo="Psicólogos na InterNET - Administração" isLogin>
+  if (!userAuth.logged && userAuth.logging) {
+    return <div>Autenticando usuário...</div>
+  };
+
+  if (!userAuth.logged && !userAuth.logging) {
+    return <div>Redirecionando...</div>
+  };
+
+  return (
+    <Template
+      siteTitulo="PSICÓLOGOS na InterNET - Administração"
+      userLogged={userAuth.name}
+    >
       <p></p>
       <hr />
-      <h3>Cadastro de Usuários</h3>
-      <h4>Usuário logado: {user.name}</h4>
-      <p></p>
+      <h3>Usuários cadastrados</h3>
+
+      { (listUsers) ? (
+        listUsers.map((user) => <UserCard User={user} removeClick={handleRemoveUser} key={user.user_id} />)
+      ) : (
+        <div></div>
+      )}
+
       <form onSubmit={handleFormSubmit} className="form-login">
         <label>
           <span>Nome do usuário</span>
-          <input type="text" name="user_name" required onChange={handleInputChange} />
+          <input
+            type="text"
+            name="user_name"
+            required
+            onChange={handleInputChange}
+          />
         </label>
         <label>
           <span>e-mail do usuário</span>
-          <input type="text" name="user_email" required onChange={handleInputChange} />
+          <input
+            type="text"
+            name="user_email"
+            required
+            onChange={handleInputChange}
+          />
         </label>
         <label>
           <span>Senha</span>
-          <input type="password" name="user_password" required onChange={handleInputChange} />
+          <input
+            type="password"
+            name="user_password"
+            required
+            onChange={handleInputChange}
+          />
         </label>
-        <input type="submit" value={btnSalvar} disabled={ (btnSalvar !== "Salvar") } />
+        <input
+          type="submit"
+          value={btnSalvar}
+          disabled={btnSalvar !== "Salvar"}
+        />
       </form>
       <Toast position="topLeft" setTime={3500} />
     </Template>
-    
   );
-}
-
-
-export async function getServerSideProps(context) {
-
-  // verifica a existência de token gravado em cookie
-  const mySecret = process.env.UUID_JWT;
-  const token = (context.req.cookies.jwtpsicosite || null);
-  const userJWT = { logged: false, id: "", name:"" }
-  try {
-    // Se existe token, valida o mesmo para obter usuário logado
-    if (token) {
-      const decoded = verify(token, mySecret);
-      userJWT.logged = true;
-      userJWT.id = decoded.id;
-      userJWT.name = decoded.username;
-    }
-  }
-  catch {    
-  }
-  
-  return {
-    props: { userJWT }
-  }
 }
 

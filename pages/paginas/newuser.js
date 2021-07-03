@@ -36,9 +36,10 @@ export default function NewUser() {
     if (!userAuth.logging && !userAuth.logged) {
       router.push("/paginas/admin");    
     } else {
+      console.log("Effect");
       dbListUsers();
     }
-  }, [userAuth])
+  }, [userAuth, btnSalvar])
 
   function sendToast( success, title ) {
     const typeToast = success ? "SUCCESS" : "ERROR";
@@ -60,6 +61,7 @@ export default function NewUser() {
 
   // Remove usuário
   async function handleRemoveUser(userId) {
+    setBtnSalvar("Aguarde...");
     const res = await fetch("/api/userdb", {
       method: "DELETE",
       headers: { "Content-type": "application/json" },
@@ -67,6 +69,7 @@ export default function NewUser() {
       body: JSON.stringify({ user_id: userId }),
     });
     const resJSON = await res.json();
+    setBtnSalvar("Salvar");
     sendToast( res.ok, resJSON.message );      
   }
 
@@ -86,6 +89,9 @@ export default function NewUser() {
     const resJSON = await res.json();
     sendToast( res.ok, resJSON.message );   
     setBtnSalvar("Salvar");
+    if (res.ok) {
+      event.target.reset();
+    }
   }
 
   if (!userAuth.logged && userAuth.logging) {

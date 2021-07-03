@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 import { useRouter } from 'next/router'
 import Template from "../../src/templates/Template";
 import useAuth from "../../src/contexts/AuthContext";
-import UserCard from "../../src/components/userCard";
+import UserCard from "../../src/components/UserCard";
 
 export default function NewUser() {
   

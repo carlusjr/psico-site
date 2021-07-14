@@ -26,5 +26,5 @@ export async function getStaticProps(context) {
   const { pagina } = context.params;
   const db = require("../../src/db");
   const props = await db.getProps(pagina);  
-  return { props, revalidate: 120 };  
+  return { props, revalidate: 1200 };  
 }

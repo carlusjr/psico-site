@@ -35,8 +35,7 @@ export default function NewUser() {
   useEffect(() => {
     if (!userAuth.logging && !userAuth.logged) {
       router.push("/paginas/admin");    
-    } else {
-      console.log("Effect");
+    } else {  
       dbListUsers();
     }
   }, [userAuth, btnSalvar])

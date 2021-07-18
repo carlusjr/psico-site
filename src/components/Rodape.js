@@ -3,6 +3,8 @@ import Link from "next/link";
 export default function Rodape({ homeLink }) {
   return (
     <div className="footer">
+      <br></br>
+      <hr></hr>
       <p>
         Desenvolvido por&nbsp;
         <Link href="https://github.com/carlusjr/psico-site">

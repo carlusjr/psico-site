@@ -45,7 +45,7 @@ export default function Admin() {
       return;
     }    
     setUserAuth({ logged: true, id: resJSON.UserId, name: resJSON.userName });
-    router.push("/paginas/newuser");
+    router.push("/paginas/menuadm");
   }
 
   return (

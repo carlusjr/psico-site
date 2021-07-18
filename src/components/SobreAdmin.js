@@ -6,8 +6,7 @@ const SobreAdmin = () => {
       <br></br>      
       <Link href="/paginas/admin">
         <a>Login do Administrador (área restrita)</a>
-      </Link>
-      <hr></hr>
+      </Link>      
     </div>
   )
 }

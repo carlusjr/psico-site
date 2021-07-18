@@ -1,5 +1,5 @@
 import style from "../../styles/toast.module.css";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ToastContext } from "../contexts/toastContext";
 import {
   FaCheck,

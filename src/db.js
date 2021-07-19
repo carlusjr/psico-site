@@ -28,6 +28,14 @@ async function getArtigo(nomeArtigo) {
   return resJSON;
 }
 
+async function getArtigos() {
+  const conn = await connect();
+  const [res] = await conn.query("SELECT * FROM artigos");
+  const resJSON = JSON.stringify(res);
+  return resJSON;
+}
+
+
 async function getSite(nomeSite) {
   const conn = await connect();
   const [res] = await conn.query(
@@ -39,10 +47,11 @@ async function getSite(nomeSite) {
 }
 
 async function getMenu(idSite) {
+  const siteId = idSite || globalSite.idSite;
   const conn = await connect();
   const [res] = await conn.query(
     "SELECT menu_nome, menu_titulo FROM menu WHERE site_id = ?",
-    idSite
+    siteId
   );
   const resJSON = JSON.stringify(res);
   return resJSON;
@@ -81,4 +90,4 @@ async function getPaths() {
   return paths;
 }
 
-module.exports = { getArtigo, getSite, getMenu, connect, getProps, getPaths };
+module.exports = { getArtigo, getArtigos, getSite, getMenu, connect, getProps, getPaths };

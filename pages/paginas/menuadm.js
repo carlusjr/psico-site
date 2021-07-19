@@ -41,7 +41,7 @@ export default function MenuAdmin() {
           </Link>        
         </li>
         <li>
-          <Link href="#">
+          <Link href="/paginas/artigoedit">
             <a>Cadastro de Artigos</a>
           </Link>        
         </li>
